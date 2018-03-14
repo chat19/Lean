@@ -117,11 +117,10 @@ namespace QuantConnect.Util
                     var info = x.Split(',');
                     var script = info[0].Replace(directory, string.Empty).GetStringBetweenChars('\"', '\"');
                     var line = int.Parse(info[1].Remove(0, 6));
-
-                    var subInfo = info[2].Split(new[] { "\\n" }, StringSplitOptions.RemoveEmptyEntries);
-                    var method = subInfo[0].Replace("in", "at");
-                    var statement = info[2].Trim();
-                    return $"  {method} in {script}:line {line} :: {statement}";
+                    info = info[2].Split(new[] { "\\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    var method = info[0].Replace("in", "at");
+                    var statement = info[1].Trim();
+                    return x;// $"  {method} in {script}:line {line} :: {statement}";
                 });
 
             var result = string.Join(Environment.NewLine, lines);
